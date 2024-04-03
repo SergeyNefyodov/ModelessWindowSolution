@@ -1,0 +1,11 @@
+﻿<RevitAddIns>
+    <AddIn Type="Application">
+        <Name>ModelessWindowSolution</Name>
+        <Assembly>ModelessWindowSolution/ModelessWindowSolution.dll</Assembly>
+        <AddInId>22F028DA-A3D0-41EC-8999-67B640EF1B0E</AddInId>
+        <FullClassName>ModelessWindowSolution.Application</FullClassName>
+        <Text>ModelessWindowSolution</Text>
+        <VendorId>MyId</VendorId>
+        <VendorDescription></VendorDescription>
+    </AddIn>
+</RevitAddIns>

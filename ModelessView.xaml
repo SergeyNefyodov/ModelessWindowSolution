@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:ModelessWindowSolution"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance local:ModelessViewModel}"
-             Height="150" Width="300">
+             Height="150" Width="300"
+        Closed="Window_Closed">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>

@@ -14,13 +14,20 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace ModelessWindowSolution
-{    
+{
     public partial class ModelessView : Window
     {
+        private readonly ModelessViewModel _viewModel;
         public ModelessView(ModelessViewModel viewModel)
         {
+            _viewModel = viewModel;
             DataContext = viewModel;
             InitializeComponent();
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.ActionHandler.Raise(_ => RevitAPI.UiApplication.SelectionChanged -= _viewModel.HandleSelection);
         }
     }
 }
