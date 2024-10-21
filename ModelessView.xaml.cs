@@ -17,16 +17,17 @@ namespace ModelessWindowSolution
 {    
     public partial class ModelessView : Window
     {
+        private readonly ModelessViewModel _viewModel;
         public ModelessView(ModelessViewModel viewModel)
         {
+            _viewModel = viewModel;
             DataContext = viewModel;
             InitializeComponent();
         }
 
         private void Unsubscribe(object sender, EventArgs e)
         {
-            Command.ActionHandler.Raise(_ =>
-            {
-                RevitAPI.UiApplication.SelectionChanged -= HandleSelection;
+            _viewModel.Unsubscribe();
+        }
     }
 }

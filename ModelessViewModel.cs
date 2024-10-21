@@ -1,4 +1,5 @@
 ﻿using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 using Autodesk.Revit.UI.Events;
 using System;
 using System.Collections.Generic;
@@ -15,14 +16,11 @@ namespace ModelessWindowSolution
         private Element _activeElement;
         private string _name;
         private string _markValue;
-        private ModelessWindowHandler _handler;
 
-        public ModelessViewModel(ModelessWindowHandler handler)
+        public ModelessViewModel()
         {
-            _handler = handler;
             RevitAPI.UiApplication.SelectionChanged += HandleSelection;
             ChangeValueCommand = new RelayCommand(ChangeValue, CanChangeValue);
-            handler.ViewModel = this;
         }
 
         public RelayCommand ChangeValueCommand { get; set; }
@@ -74,10 +72,35 @@ namespace ModelessWindowSolution
             }
         }
 
-        private void ChangeValue(object parameter)
+        private void ChangeValue(object p)
         {
-            _handler.Raise();
-            RaiseCloseRequest();
+            Command.ActionHandler.Raise(ChangeMarkValue);
+        }
+        public void Unsubscribe()
+        {
+            Command.ActionHandler.Raise(_ =>
+            {
+                RevitAPI.UiApplication.SelectionChanged -= HandleSelection;
+            });
+        }
+
+        private void ChangeMarkValue(UIApplication app)
+        {
+            try
+            {
+                var parameter = ActiveElement.get_Parameter(BuiltInParameter.ALL_MODEL_MARK);
+                if (parameter != null)
+                {
+                    using var transaction = new Transaction(RevitAPI.Document, "Parameter value changing");
+                    transaction.Start();
+                    parameter.Set(MarkValue);
+                    transaction.Commit();
+                }
+            }
+            catch (Exception exception)
+            {
+                TaskDialog.Show("Error", exception.Message + exception.StackTrace);
+            }
         }
 
         private bool CanChangeValue(object parameter)
@@ -94,6 +117,7 @@ namespace ModelessWindowSolution
         private void RaiseCloseRequest()
         {
             CloseRequest?.Invoke(this, EventArgs.Empty);
+            
         }
     }
 }

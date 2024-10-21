@@ -12,6 +12,7 @@
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -55,7 +56,7 @@
   <ItemGroup>
     <Compile Include="Command.cs" />
     <Compile Include="ModelessViewModel.cs" />
-    <Compile Include="ModelessWindowHandler.cs" />
+    <Compile Include="ActionEventHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ModelessView.xaml.cs">
       <DependentUpon>ModelessView.xaml</DependentUpon>
