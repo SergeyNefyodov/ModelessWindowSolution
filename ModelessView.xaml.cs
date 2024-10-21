@@ -22,5 +22,11 @@ namespace ModelessWindowSolution
             DataContext = viewModel;
             InitializeComponent();
         }
+
+        private void Unsubscribe(object sender, EventArgs e)
+        {
+            Command.ActionHandler.Raise(_ =>
+            {
+                RevitAPI.UiApplication.SelectionChanged -= HandleSelection;
     }
 }
