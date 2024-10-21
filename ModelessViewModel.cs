@@ -75,14 +75,7 @@ namespace ModelessWindowSolution
         private void ChangeValue(object p)
         {
             Command.ActionHandler.Raise(ChangeMarkValue);
-        }
-        public void Unsubscribe()
-        {
-            Command.ActionHandler.Raise(_ =>
-            {
-                RevitAPI.UiApplication.SelectionChanged -= HandleSelection;
-            });
-        }
+        }        
 
         private void ChangeMarkValue(UIApplication app)
         {
@@ -101,6 +94,13 @@ namespace ModelessWindowSolution
             {
                 TaskDialog.Show("Error", exception.Message + exception.StackTrace);
             }
+        }
+        public void Unsubscribe()
+        {
+            Command.ActionHandler.Raise(_ =>
+            {
+                RevitAPI.UiApplication.SelectionChanged -= HandleSelection;
+            });
         }
 
         private bool CanChangeValue(object parameter)
